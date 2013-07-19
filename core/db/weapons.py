@@ -1,10 +1,14 @@
 __author__ = 'jesuejunior'
 
-class Weapons(battle.db.Model):
-    __tablename__ = 'directory'
+from sqlalchemy import Integer, Column, Boolean, String
+import core
+
+
+class Weapons(core.db.Model):
+    __tablename__ = 'weapons'
 
     id = Column(Integer, primary_key=True)
-    base = Column(String, nullable=False)
-    index_file = Column(String, nullable=False)
-    default_ctype = Column(String, nullable=False)
-    cache_ttl = Column(Boolean, default=0)
+    name = Column(String, nullable=False)
+    kills = Column(Integer, nullable=False)
+    accurary = Column(Integer, nullable=False)
+    service_star = Column(Boolean, default=0)
