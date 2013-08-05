@@ -1,3 +1,6 @@
+from core.action.extractor import _extract
+from core.action.profile import updater, create
+
 __author__ = 'jesuejunior'
 
 from splinter import Browser
@@ -27,7 +30,7 @@ profile_player_xpath = {
             'flags_captured_ctf' : "//table[@class='profile-venicestats-overview-boxwideclean-table'][2]/tbody/tr[10]/td[2]",
             #segunda coluna acaba aqui
             'squad_score_bonus' : "//table[@class='profile-venicestats-overview-boxwideclean-table last']/tbody/tr[1]/td[2]",
-            'repairs ' : "//table[@class='profile-venicestats-overview-boxwideclean-table last']/tbody/tr[2]/td[2]",
+            'repairs' : "//table[@class='profile-venicestats-overview-boxwideclean-table last']/tbody/tr[2]/td[2]",
             'revives' : "//table[@class='profile-venicestats-overview-boxwideclean-table last']/tbody/tr[3]/td[2]",
             'heals' : "//table[@class='profile-venicestats-overview-boxwideclean-table last']/tbody/tr[4]/td[2]",
             'resupplies' : "//table[@class='profile-venicestats-overview-boxwideclean-table last']/tbody/tr[5]/td[2]",
@@ -39,8 +42,19 @@ profile_player_xpath = {
 
 
 
+user = {'username' : 'bombaCM',
+        'url_profile' : 'http://battlelog.battlefield.com/bf3/soldier/bombaCM/stats/370974436/ps3/',
+        'url_weapons' :  'http://battlelog.battlefield.com/bf3/soldier/bombaCM/weapons/370974436/ps3/',
+        }
 
-url_profile = 'http://battlelog.battlefield.com/bf3/soldier/Juninn3k6/stats/327539077/ps3/'
+
+user_old = {'username' : 'Juninn3k6',
+        'url_profile' : 'http://battlelog.battlefield.com/bf3/soldier/Juninn3k6/stats/327539077/ps3/',
+        'url_weapons' :  'http://battlelog.battlefield.com/bf3/soldier/Juninn3k6/weapons/327539077/ps3/',
+        }
+
+create(user)
+
 html = ""
 
 parser = etree.HTMLParser(remove_comments=True, encoding='utf-8')
@@ -48,7 +62,6 @@ parser = etree.HTMLParser(remove_comments=True, encoding='utf-8')
 def catch_metadata(xpath, tree):
     go_return = None
 
-    go_return= ''
     elements = tree.xpath(xpath)
     for el in elements:
         for text in el.itertext(with_tail=True):
@@ -58,21 +71,21 @@ def catch_metadata(xpath, tree):
 
     return go_return
 
-
 with Browser() as browser:
      # Visit URL
-     browser.visit(url_profile)
+     browser.visit(user['url_profile'])
 
      # Pagina pronta
      html = browser.html
 
-
 tree = etree.fromstring(html, parser)
 
 profile = {}
+profile['username'] = user['username']
 
 for key,value in profile_player_xpath.iteritems():
-     profile[key] = catch_metadata(value, tree)
+     profile[key] = _extract(catch_metadata(value, tree))
 
+updater(profile)
 
-print profile
+print "profile atualizado com sucesso."
