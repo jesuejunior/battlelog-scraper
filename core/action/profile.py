@@ -6,11 +6,18 @@ __author__ = 'jesuejunior'
 
 def create(data):
 
-    profile = Profile(username=data['username'], url_profile=data['url_profile'], url_weapons=data['url_weapons'] )
     with managed(Session) as session:
-        session.add(profile)
-
-    return True
+        try:
+            valid = session.query(Profile).filter_by(username=data['username'])[0]
+        except Exception:
+            valid = False
+    if valid:
+        return False
+    else:
+        with managed(Session) as session:
+            profile = Profile(username=data['username'], url_profile=data['url_profile'], url_weapons=data['url_weapons'] )
+            session.add(profile)
+        return True
 
 def updater(data):
     with managed(Session) as session:
@@ -18,6 +25,7 @@ def updater(data):
 
         profile.kills = data['kills']
         profile.deaths = data['deaths']
+        profile.kd_ratio = data['kd_ratio']
         profile.kill_assists = data['kill_assists']
         profile.score_min = data['score_min']
         profile.quits = data['quits']

@@ -23,8 +23,8 @@ class ProfileTest(unittest.TestCase):
         Metadata.create_all()
 
     def test_create_profile(self):
+        create(self.data)
         with managed(Session) as session:
-            create(self.data)
 
             profile = session.query(Profile).all()
             self.assertEquals(1, len(profile))
@@ -32,6 +32,17 @@ class ProfileTest(unittest.TestCase):
             self.assertEquals(profile[0].id, 1)
             self.assertEquals(profile[0].url_profile, 'http://battlelog.battlefield.com/bf3/soldier/Batstaka/stats/327539077/ps3/')
             self.assertEquals(profile[0].url_weapons, 'http://battlelog.battlefield.com/bf3/soldier/Batstaka/weapons/327539077/ps3/')
+    def test_profile_exist(self):
+        create(self.data)
+        with managed(Session) as session:
+            profiles = session.query(Profile).all()
+            self.assertEquals(1, len(profiles))
+
+        create(self.data)
+        with managed(Session) as session:
+            profiles = session.query(Profile).all()
+            self.assertEquals(1, len(profiles))
+
 
     def test_update_profile(self):
 
@@ -84,6 +95,7 @@ class ProfileTest(unittest.TestCase):
 
             updater(profile_player)
 
+        with managed(Session) as session:
             p_test = session.query(Profile).filter_by(username='Batstaka')[0]
 
             self.assertEquals(p_test.kills, 16000)
@@ -91,3 +103,27 @@ class ProfileTest(unittest.TestCase):
             self.assertEquals(p_test.kd_ratio, 1.04)
             self.assertEquals(p_test.kill_assists, 1000)
             self.assertEquals(p_test.score_min, 550)
+            self.assertEquals(p_test.quits, 30)
+            self.assertEquals(p_test.mcom_defend_kills, 50)
+            self.assertEquals(p_test.mcom_destroyed, 100)
+            self.assertEquals(p_test.flags_captured_conquest, 120)
+            self.assertEquals(p_test.flags_defended_conquest, 120)
+            self.assertEquals(p_test.vehicles_destroyed, 2000)
+            self.assertEquals(p_test.vehicles_destroyed_assists, 3000)
+            self.assertEquals(p_test.avg_weapon_accuracy, 12.1)
+            self.assertEquals(p_test.longest_headshot, 188)
+            self.assertEquals(p_test.highest_kill_streak, 8)
+            self.assertEquals(p_test.skill, 600)
+            self.assertEquals(p_test.avenger_kills, 30)
+            self.assertEquals(p_test.savior_kills, 20)
+            self.assertEquals(p_test.dogtags_taken, 1600)
+            self.assertEquals(p_test.flags_captured_ctf, 35)
+            self.assertEquals(p_test.squad_score_bonus, 599)
+            self.assertEquals(p_test.repairs, 1200)
+            self.assertEquals(p_test.revives, 5000)
+            self.assertEquals(p_test.heals, 20000)
+            self.assertEquals(p_test.resupplies, 300)
+            self.assertEquals(p_test.shots_fired, 222)
+            self.assertEquals(p_test.highest_nemesis_streak, 9)
+            self.assertEquals(p_test.nemesis_kills, 21)
+            self.assertEquals(p_test.suppression_assists, 123)

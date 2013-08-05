@@ -13,7 +13,7 @@ class Profile(core.db.Model):
 
     kills = Column(Integer, default=0)
     deaths = Column(Integer, default=0)
-    kd_ratio = Column(Float, default=0)
+    kd_ratio = Column(Float, default=0.0)
     kill_assists = Column(Integer, default=0)
     score_min = Column(Integer, default=0)
     quits = Column(Integer, default=0)
