@@ -7,11 +7,8 @@ __author__ = 'jesuejunior'
 def create(data):
 
     with managed(Session) as session:
-        try:
-            valid = session.query(Profile).filter_by(username=data['username'])[0]
-        except Exception:
-            valid = False
-    if valid:
+        profile = session.query(Profile).filter_by(username=data['username']).all()
+    if profile:
         return False
     else:
         with managed(Session) as session:
