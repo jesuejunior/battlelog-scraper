@@ -1,9 +1,9 @@
 import unittest
 from alchemytools.context import managed
+from core.action.profile import profile_create
 from core.db.profile import Profile
 
 from test import rebuild_schema
-from core.action.stats import create
 from core.db import Metadata, Session
 
 __author__ = 'jesuejunior'
@@ -24,7 +24,7 @@ class ProfileTest(unittest.TestCase):
         Metadata.create_all()
 
     def test_create_profile(self):
-        create(self.data)
+        profile_create(self.data)
         with managed(Session) as session:
 
             profile = session.query(Profile).all()
@@ -36,12 +36,12 @@ class ProfileTest(unittest.TestCase):
             self.assertEquals(profile[0].url_vehicles, 'http://battlelog.battlefield.com/bf3/soldier/Batstaka/vehicles/327539077/ps3/')
 
     def test_profile_exist(self):
-        create(self.data)
+        profile_create(self.data)
         with managed(Session) as session:
             profiles = session.query(Profile).all()
             self.assertEquals(1, len(profiles))
 
-        create(self.data)
+        profile_create(self.data)
         with managed(Session) as session:
             profiles = session.query(Profile).all()
             self.assertEquals(1, len(profiles))

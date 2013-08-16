@@ -1,9 +1,10 @@
 import unittest
 from alchemytools.context import managed
+from core.action.profile import profile_create
 from core.db.profile import Profile
 
 from test import rebuild_schema
-from core.action.stats import create, updater
+from core.action.stats import updater
 from core.db import Metadata, Session
 from core.db.stats import Stats
 
@@ -26,7 +27,7 @@ class StatsTest(unittest.TestCase):
 
     def test_update_stats(self):
 
-        create(self.data)
+        profile_create(self.data)
 
         stats_player = {
             'username' : 'Batstaka',
