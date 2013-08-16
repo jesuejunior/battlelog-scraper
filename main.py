@@ -1,5 +1,5 @@
 from core.action.extractor import _extract
-from core.action.profile import updater, create
+from core.action.stats import updater, create
 
 __author__ = 'jesuejunior'
 
@@ -7,6 +7,20 @@ from splinter import Browser
 from lxml import etree
 
 profile_player_xpath = {
+
+            #Stats de classes
+            'level' : "//div[@class='profile-venicestats-overview-highlight-rank-info profile-venicestats-overview-highlight-bottom']/h1[@class='profile-venicestats-overview-highlight-stat-title']",
+            'score_assault' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[1]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_engineer' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[2]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_support' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[3]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_recon' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[4]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_vehicles' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[5]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_combat' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[6]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_award' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[7]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_unlocks' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tbody/tr[8]/td[2]/div[@class='profile-venicestats-overview-table-cell-border']",
+            'score_total' : "//table[@class='profile-venicestats-overview-boxnarrowclean-table nocompare']/tfoot/tr/td[2]/div[@class='profile-venicestats-overview-table-cell-border profile-venicestats-overview-total-score']",
+
+            #Primeira coluna stats
             'kills' : "//table[@class='profile-venicestats-overview-boxwideclean-table'][1]/tbody/tr[1]/td[2]",
             'deaths' : "//table[@class='profile-venicestats-overview-boxwideclean-table'][1]/tbody/tr[2]/td[2]",
             'kd_ratio' : "//table[@class='profile-venicestats-overview-boxwideclean-table'][1]/tbody/tr[3]/td[2]",
@@ -43,14 +57,16 @@ profile_player_xpath = {
 
 
 user = {'username' : 'bombaCM',
-        'url_profile' : 'http://battlelog.battlefield.com/bf3/soldier/bombaCM/stats/370974436/ps3/',
+        'url_stats' : 'http://battlelog.battlefield.com/bf3/soldier/bombaCM/stats/370974436/ps3/',
         'url_weapons' :  'http://battlelog.battlefield.com/bf3/soldier/bombaCM/weapons/370974436/ps3/',
+        'url_vehicles' :  'http://battlelog.battlefield.com/bf3/soldier/bombaCM/vehicles/370974436/ps3/',
         }
 
 
 user_old = {'username' : 'Juninn3k6',
-        'url_profile' : 'http://battlelog.battlefield.com/bf3/soldier/Juninn3k6/stats/327539077/ps3/',
+        'url_stats' : 'http://battlelog.battlefield.com/bf3/soldier/Juninn3k6/stats/327539077/ps3/',
         'url_weapons' :  'http://battlelog.battlefield.com/bf3/soldier/Juninn3k6/weapons/327539077/ps3/',
+        'url_vehicles' :  'http://battlelog.battlefield.com/bf3/soldier/Juninn3k6/vehicles/327539077/ps3/',
         }
 
 create(user)
